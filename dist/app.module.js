@@ -12,6 +12,7 @@ const typeorm_1 = require("@nestjs/typeorm");
 const config_1 = require("@nestjs/config");
 const jwt_1 = require("@nestjs/jwt");
 const passport_1 = require("@nestjs/passport");
+const app_controller_1 = require("./app.controller");
 const auth_module_1 = require("./auth/auth.module");
 const clientes_module_1 = require("./clientes/clientes.module");
 const vendas_module_1 = require("./vendas/vendas.module");
@@ -42,6 +43,7 @@ exports.AppModule = AppModule = __decorate([
             clientes_module_1.ClientesModule,
             vendas_module_1.VendasModule,
         ],
+        controllers: [app_controller_1.AppController],
     })
 ], AppModule);
 //# sourceMappingURL=app.module.js.map

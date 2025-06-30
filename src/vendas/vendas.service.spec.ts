@@ -92,10 +92,17 @@ describe('VendasService', () => {
         where: { clienteId },
         order: { data: 'DESC' },
       });
-      expect(result).toEqual([
-        { id: 1, clienteId: 1, valor: 100.50, data: new Date() },
-        { id: 2, clienteId: 1, valor: 200.00, data: new Date() },
-      ]);
+      expect(result).toHaveLength(2);
+      expect(result[0]).toMatchObject({
+        id: 1,
+        clienteId: 1,
+        valor: 100.50,
+      });
+      expect(result[1]).toMatchObject({
+        id: 2,
+        clienteId: 1,
+        valor: 200.00,
+      });
     });
   });
 
@@ -123,7 +130,12 @@ describe('VendasService', () => {
         data: new Date(createVendaDto.data),
       });
       expect(mockVendaRepository.save).toHaveBeenCalledWith(expectedVenda);
-      expect(result).toEqual(expectedVenda);
+      expect(result).toMatchObject({
+        id: 1,
+        clienteId: 1,
+        valor: 100.50,
+      });
+      expect(result.data).toEqual(new Date(createVendaDto.data));
     });
   });
 

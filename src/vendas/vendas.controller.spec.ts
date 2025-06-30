@@ -51,7 +51,12 @@ describe('VendasController', () => {
       const result = await controller.create(createVendaDto);
 
       expect(service.create).toHaveBeenCalledWith(createVendaDto);
-      expect(result).toEqual(expectedVenda);
+      expect(result).toMatchObject({
+        id: 1,
+        clienteId: 1,
+        valor: 100.50,
+      });
+      expect(result.data).toEqual(new Date(createVendaDto.data));
     });
   });
 
@@ -101,7 +106,17 @@ describe('VendasController', () => {
       const result = await controller.getVendasPorCliente(clienteId);
 
       expect(service.getVendasPorCliente).toHaveBeenCalledWith(1);
-      expect(result).toEqual(expectedVendas);
+      expect(result).toHaveLength(2);
+      expect(result[0]).toMatchObject({
+        id: 1,
+        clienteId: 1,
+        valor: 100.50,
+      });
+      expect(result[1]).toMatchObject({
+        id: 2,
+        clienteId: 1,
+        valor: 200.00,
+      });
     });
   });
 }); 

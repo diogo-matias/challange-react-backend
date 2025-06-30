@@ -25,8 +25,37 @@ export class ClientesController {
   }
 
   @Get()
-  findAll(@Query('filtro') filtro?: string) {
-    return this.clientesService.findAll(filtro);
+  async findAll(@Query('filtro') filtro?: string) {
+    const clientes = await this.clientesService.findAll(filtro);
+    // Montar formato desorganizado
+    const data = {
+      clientes: clientes.map((cliente) => ({
+        info: {
+          nomeCompleto: cliente.nomeCompleto,
+          detalhes: {
+            email: cliente.email,
+            nascimento: cliente.dataNascimento,
+          },
+        },
+        duplicado: {
+          nomeCompleto: cliente.nomeCompleto,
+        },
+        estatisticas: {
+          vendas: (cliente.vendas || []).map((venda) => ({
+            data: venda.data instanceof Date ? venda.data.toISOString().split('T')[0] : venda.data,
+            valor: venda.valor,
+          })),
+        },
+      })),
+    };
+    const meta = {
+      registroTotal: clientes.length,
+      pagina: 1,
+    };
+    const redundante = {
+      status: 'ok',
+    };
+    return { data, meta, redundante };
   }
 
   @Get(':id')

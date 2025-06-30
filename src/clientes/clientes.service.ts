@@ -13,15 +13,12 @@ export class ClientesService {
   ) {}
 
   async create(createClienteDto: CreateClienteDto): Promise<Cliente> {
-    console.log('Criando cliente:', createClienteDto);
     const cliente = this.clienteRepository.create(createClienteDto);
     const savedCliente = await this.clienteRepository.save(cliente);
-    console.log('Cliente criado:', savedCliente);
     return savedCliente;
   }
 
   async findAll(filtro?: string): Promise<Cliente[]> {
-    console.log('Buscando clientes, filtro:', filtro);
     let clientes;
     if (filtro) {
       clientes = await this.clienteRepository.find({
@@ -34,7 +31,6 @@ export class ClientesService {
     } else {
       clientes = await this.clienteRepository.find({ relations: ['vendas'] });
     }
-    console.log('Clientes encontrados:', clientes.length);
     return clientes;
   }
 
@@ -56,22 +52,17 @@ export class ClientesService {
   }
 
   async remove(id: number): Promise<void> {
-    console.log('Tentando remover cliente com ID:', id);
     const cliente = await this.findOne(id);
     
     if (cliente.vendas && cliente.vendas.length > 0) {
-      console.log('Cliente tem vendas associadas:', cliente.vendas.length);
-      // Primeiro remove as vendas associadas
       await this.clienteRepository
         .createQueryBuilder()
         .delete()
         .from('venda')
         .where('clienteId = :id', { id })
         .execute();
-      console.log('Vendas removidas');
     }
     
     await this.clienteRepository.remove(cliente);
-    console.log('Cliente removido com sucesso');
   }
 } 

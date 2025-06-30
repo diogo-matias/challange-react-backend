@@ -41,14 +41,12 @@ export class ClientesController {
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    console.log('Controller - Recebendo requisição DELETE para cliente ID:', id);
     return this.clientesService.remove(+id);
   }
 
   @Delete('test/:id')
   @UseGuards()
   removeTest(@Param('id') id: string) {
-    console.log('Controller - Recebendo requisição DELETE TEST para cliente ID:', id);
     return this.clientesService.remove(+id);
   }
 } 

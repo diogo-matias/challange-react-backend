@@ -36,7 +36,6 @@ export class VendasService {
       order: { data: 'DESC' },
     });
     
-    // Ensure valor is returned as a number
     return vendas.map(venda => ({
       ...venda,
       valor: Number(venda.valor),

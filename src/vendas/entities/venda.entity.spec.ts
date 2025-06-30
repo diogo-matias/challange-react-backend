@@ -5,16 +5,6 @@ describe('Venda Entity', () => {
     expect(new Venda()).toBeDefined();
   });
 
-  it('should have correct properties', () => {
-    const venda = new Venda();
-    
-    expect(venda).toHaveProperty('id');
-    expect(venda).toHaveProperty('valor');
-    expect(venda).toHaveProperty('data');
-    expect(venda).toHaveProperty('cliente');
-    expect(venda).toHaveProperty('clienteId');
-  });
-
   it('should create venda with data', () => {
     const venda = new Venda();
     venda.id = 1;

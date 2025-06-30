@@ -3,6 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
+import { AppController } from './app.controller';
 import { AuthModule } from './auth/auth.module';
 import { ClientesModule } from './clientes/clientes.module';
 import { VendasModule } from './vendas/vendas.module';
@@ -30,5 +31,6 @@ import { Venda } from './vendas/entities/venda.entity';
     ClientesModule,
     VendasModule,
   ],
+  controllers: [AppController],
 })
 export class AppModule {} 
